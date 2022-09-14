@@ -19,7 +19,7 @@ class RetrieveStudentCommand extends Command
         $response = $vestaClient->retrieveStudent($identifier);
         if ($response->successful()) {
             $this->info('Student info retrieved successfully');
-            $this->info(json_encode($response->json(), JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE));
+            $this->info(json_encode($response->json(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
         } else {
             $this->error('Error retrieving student info: '.$response->status().' '.$response->body());
         }
