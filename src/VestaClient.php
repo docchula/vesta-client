@@ -5,6 +5,7 @@ namespace Docchula\VestaClient;
 use DateTimeImmutable;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
+use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Configuration as JwtConfiguration;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\Signer\Key\InMemory;
@@ -22,7 +23,12 @@ class VestaClient
         $this->jwtConfig = JwtConfiguration::forSymmetricSigner(new Sha256(), InMemory::plainText(config('vesta-client.secret')));
     }
 
-    protected function getJwtBuilder(string $expireTime = '+2 hour'): \Lcobucci\JWT\Builder
+    public function isEnabled(): bool
+    {
+        return (bool) config('vesta-client.secret');
+    }
+
+    protected function getJwtBuilder(?string $expireTime = '+2 hour'): Builder
     {
         $now = new DateTimeImmutable();
 
@@ -31,7 +37,7 @@ class VestaClient
             ->permittedFor('Vesta')
             ->issuedAt($now)
             ->canOnlyBeUsedAfter($now->modify('-1 minute'))
-            ->expiresAt($now->modify($expireTime));
+            ->expiresAt($now->modify($expireTime ?? '+2 hour'));
     }
 
     public function generateApiIdToken(?string $email, array $targets, array $fields, ?string $expireTime = null): string
