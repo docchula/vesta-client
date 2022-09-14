@@ -15,12 +15,11 @@ class RetrieveStudentCommand extends Command
     {
         $identifier = $this->argument('identifier');
         $this->comment('Retrieving student info for '.$identifier);
-        /** @var VestaClient $vestaClient */
-        $vestaClient = resolve('vesta-client');
+        $vestaClient = new VestaClient();
         $response = $vestaClient->retrieveStudent($identifier);
         if ($response->successful()) {
             $this->info('Student info retrieved successfully');
-            $this->info(json_encode($response->json(), JSON_PRETTY_PRINT));
+            $this->info(json_encode($response->json(), JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE));
         } else {
             $this->error('Error retrieving student info: '.$response->status().' '.$response->body());
         }
