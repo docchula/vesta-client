@@ -34,9 +34,9 @@ class VestaClient
             ->expiresAt($now->modify($expireTime));
     }
 
-    public function generateApiIdToken(?string $email, array $targets, array $fields): string
+    public function generateApiIdToken(?string $email, array $targets, array $fields, ?string $expireTime = null): string
     {
-        $token = $this->getJwtBuilder()->withClaim('fields', $fields)->withClaim('targets', $targets);
+        $token = $this->getJwtBuilder($expireTime)->withClaim('fields', $fields)->withClaim('targets', $targets);
         if (isset($email)) {
             $token = $token->withClaim('email', $email);
         }
