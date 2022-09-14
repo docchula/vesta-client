@@ -21,6 +21,12 @@ You can publish the config file with:
 php artisan vendor:publish --tag="vesta-client-config"
 ```
 
+You should set the following ENV variables:
+
+- `VESTA_SECRET` - The secret key provided by Vesta
+- `VESTA_ISSUER` - The issuer URL provided by Vesta
+- `VESTA_URL`- The URL of the Vesta API (optional)
+
 ## Usage
 
 ```php
