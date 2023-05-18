@@ -20,7 +20,7 @@ class VestaClient
     {
         $this->httpClient = new PendingRequest();
         $this->httpClient->baseUrl(config('vesta-client.url'));
-        $this->jwtConfig = JwtConfiguration::forSymmetricSigner(new Sha256(), InMemory::plainText(config('vesta-client.secret')));
+        $this->jwtConfig = JwtConfiguration::forSymmetricSigner(new Sha256(), InMemory::plainText(config('vesta-client.secret', '')));
     }
 
     public function isEnabled(): bool
