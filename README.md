@@ -31,6 +31,11 @@ You should set the following ENV variables:
 
 ```php
 $vestaClient = new Docchula\VestaClient();
+// or use Laravel's Facade:
+$response = VestaClient::retrieveStudent($identifier, $userEmail, ['title', 'first_name', 'last_name', 'first_name_en', 'last_name_en', 'email', 'nickname']);
+if ($response->successful()) {
+    $data = $response->json();
+}
 ```
 
 ## Testing
