@@ -15,12 +15,14 @@ class VestaClient
     protected PendingRequest $httpClient;
 
     protected JwtConfiguration $jwtConfig;
+    protected string $tokenIssuer;
 
-    public function __construct()
+    public function __construct(?string $url = null, ?string $secret = null, ?string $issuer = null)
     {
         $this->httpClient = new PendingRequest();
-        $this->httpClient->baseUrl(config('vesta-client.url'));
-        $this->jwtConfig = JwtConfiguration::forSymmetricSigner(new Sha256(), InMemory::plainText(config('vesta-client.secret', '')));
+        $this->httpClient->baseUrl($url ?? config('vesta-client.url'));
+        $this->jwtConfig = JwtConfiguration::forSymmetricSigner(new Sha256(), InMemory::plainText($secret ?? config('vesta-client.secret', '')));
+        $this->tokenIssuer = $issuer ?? config('vesta-client.issuer');
     }
 
     public function isEnabled(): bool
@@ -33,7 +35,7 @@ class VestaClient
         $now = new DateTimeImmutable();
 
         return $this->jwtConfig->builder()
-            ->issuedBy(config('vesta-client.issuer'))
+            ->issuedBy($this->tokenIssuer)
             ->permittedFor('Vesta')
             ->issuedAt($now)
             ->canOnlyBeUsedAfter($now->modify('-1 minute'))
