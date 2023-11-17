@@ -20,7 +20,7 @@
         "guzzlehttp/guzzle": "^7.5",
         "illuminate/contracts": "^9.0|^10.0",
         "illuminate/http": "^9.30|^10.0",
-        "lcobucci/jwt": "^4.2",
+        "lcobucci/jwt": "^5.1.0",
         "spatie/laravel-package-tools": "^1.14.0"
     },
     "require-dev": {
