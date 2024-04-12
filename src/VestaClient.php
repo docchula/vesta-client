@@ -18,7 +18,7 @@ class VestaClient
 
     protected string $tokenIssuer;
 
-    public function __construct(string $url = null, string $secret = null, string $issuer = null)
+    public function __construct(?string $url = null, ?string $secret = null, ?string $issuer = null)
     {
         $this->httpClient = new PendingRequest();
         $this->httpClient->baseUrl($url ?? config('vesta-client.url'));
@@ -43,7 +43,7 @@ class VestaClient
             ->expiresAt($now->modify($expireTime ?? '+2 hour'));
     }
 
-    public function generateApiIdToken(?string $email, array $targets, array $fields, string $expireTime = null): string
+    public function generateApiIdToken(?string $email, array $targets, array $fields, ?string $expireTime = null): string
     {
         $token = $this->getJwtBuilder($expireTime)->withClaim('fields', $fields)->withClaim('targets', $targets);
         if (isset($email)) {
@@ -53,7 +53,7 @@ class VestaClient
         return $token->getToken($this->jwtConfig->signer(), $this->jwtConfig->signingKey())->toString();
     }
 
-    public function retrieveStudent(string $identifier, string $userEmail = null, array $fields = null): Response
+    public function retrieveStudent(string $identifier, ?string $userEmail = null, ?array $fields = null): Response
     {
         return $this->httpClient->acceptJson()
             ->withToken($this->generateApiIdToken($userEmail, [$identifier], $fields ?? ['student_id', 'title', 'first_name', 'last_name', 'email']))
