@@ -20,9 +20,9 @@ class VestaClient
 
     public function __construct(?string $url = null, ?string $secret = null, ?string $issuer = null)
     {
-        $this->httpClient = new PendingRequest();
+        $this->httpClient = new PendingRequest;
         $this->httpClient->baseUrl($url ?? config('vesta-client.url'));
-        $this->jwtConfig = JwtConfiguration::forSymmetricSigner(new Sha256(), InMemory::plainText($secret ?? config('vesta-client.secret', '')));
+        $this->jwtConfig = JwtConfiguration::forSymmetricSigner(new Sha256, InMemory::plainText($secret ?? config('vesta-client.secret', '')));
         $this->tokenIssuer = $issuer ?? config('vesta-client.issuer');
     }
 
@@ -33,7 +33,7 @@ class VestaClient
 
     protected function getJwtBuilder(?string $expireTime = '+2 hour'): Builder
     {
-        $now = new DateTimeImmutable();
+        $now = new DateTimeImmutable;
 
         return $this->jwtConfig->builder()
             ->issuedBy($this->tokenIssuer)

@@ -15,7 +15,7 @@ class RetrieveStudentCommand extends Command
     {
         $identifier = $this->argument('identifier');
         $this->comment('Retrieving student info for '.$identifier);
-        $vestaClient = new VestaClient();
+        $vestaClient = new VestaClient;
         $response = $vestaClient->retrieveStudent($identifier);
         if ($response->successful()) {
             $this->info('Student info retrieved successfully');

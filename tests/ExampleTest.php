@@ -23,13 +23,13 @@ it('can generate ID token', function () {
     $tokenStr = $client->generateApiIdToken($email, [$email], ['student_id', 'title', 'first_name', 'last_name', 'email']);
 
     // Validate token
-    $token = (new Parser(new JoseEncoder()))->parse($tokenStr);
+    $token = (new Parser(new JoseEncoder))->parse($tokenStr);
     expect($token)->toBeInstanceOf(UnencryptedToken::class);
     $tokenClaims = $token->claims();
     expect($tokenClaims->get('iss'))->toBe($issuer);
     expect($tokenClaims->get('email'))->toBe($email);
 
-    $config = Configuration::forSymmetricSigner(new Sha256(), // HMAC SHA256
+    $config = Configuration::forSymmetricSigner(new Sha256, // HMAC SHA256
         InMemory::plainText($secret));
     expect($config->validator()->validate($token,
         new PermittedFor('Vesta'),
