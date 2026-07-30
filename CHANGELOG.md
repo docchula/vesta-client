@@ -2,6 +2,10 @@
 
 All notable changes to `vesta-client` will be documented in this file.
 
+## v1.0.2 - 2026-07-30
+
+Add support for Laravel 13
+
 ## v1.0.1 - 2025-08-18
 
 Add support for Laravel 12
