@@ -2,6 +2,10 @@
 
 All notable changes to `vesta-client` will be documented in this file.
 
+## v1.0.3 - 2026-10-22
+
+Add support for Guzzle 8.
+
 ## v1.0.2 - 2026-07-30
 
 Add support for Laravel 13
