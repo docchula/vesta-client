@@ -5,6 +5,7 @@ namespace Docchula\VestaClient;
 use DateTimeImmutable;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
+use Illuminate\Support\Facades\Http;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Configuration as JwtConfiguration;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
@@ -20,8 +21,7 @@ class VestaClient
 
     public function __construct(?string $url = null, ?string $secret = null, ?string $issuer = null)
     {
-        $this->httpClient = new PendingRequest;
-        $this->httpClient->baseUrl($url ?? config('vesta-client.url'));
+        $this->httpClient = Http::baseUrl($url ?? config('vesta-client.url'));
         $this->jwtConfig = JwtConfiguration::forSymmetricSigner(new Sha256, InMemory::plainText($secret ?? config('vesta-client.secret', '')));
         $this->tokenIssuer = $issuer ?? config('vesta-client.issuer');
     }
